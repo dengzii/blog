@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"fmt"
+	"github.com/dengzii/blog/apis"
 	"github.com/dengzii/blog/apis/article"
 	"github.com/dengzii/blog/apis/common"
 	"github.com/dengzii/blog/apis/friend"
@@ -75,6 +75,11 @@ func categoryRouterFunc(p router.Party) {
 	//p.Patch("/", catchErrorRouter(apis.PatchCategoriesController))
 }
 
+func userStaticRouterFunc(p router.Party) {
+	p.Get("/{file:file}", catchErrorRouter(apis.StaticFileApi))
+	p.Put("/", catchErrorRouter(apis.UploadFileApi))
+}
+
 func catchErrorView(view string, dataKey string, dataValue interface{}) func(context.Context) {
 
 	return func(ctx context.Context) {
@@ -92,7 +97,8 @@ func catchErrorRouter(router func(context.Context) error) func(context.Context) 
 	return func(ctx context.Context) {
 		err := router(ctx)
 		if err != nil {
-			_, _ = ctx.WriteString("error," + err.Error())
+			ctx.StatusCode(iris.StatusBadRequest)
+			_, _ = ctx.Writef("Error, %s", err.Error())
 		}
 	}
 }
@@ -104,18 +110,6 @@ func subdomainRouter(ctx context.Context) {
 func errorRouter(app *bootstrap.Bootstrapper) {
 	app.OnErrorCode(iris.StatusInternalServerError, common.ReturnServerError)
 	app.OnErrorCode(iris.StatusNotFound, common.ReturnNotFound)
-}
-
-func userStaticRouterFunc(p router.Party) {
-	p.Get("/{file:string}", func(context context.Context) {
-		f := context.URLParam("file")
-		u := context.URLParam("username")
-		path := fmt.Sprintf("./static/%s/%s", u, f)
-		err := context.ServeFile(path, false)
-		if err != nil {
-			common.ReturnNotFound(context)
-		}
-	})
 }
 
 func init() {

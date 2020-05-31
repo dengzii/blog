@@ -42,7 +42,7 @@ func AddUser(name string, passwd string, email string) (success bool) {
 
 func GetUserInfo(name string) interface{} {
 	var user User
-	result := db.Mysql.Where("name = ?", name).Find(&user).RowsAffected
+	result := db.Mysql.Where("name = ?", name).First(&user).RowsAffected
 	if result == 0 {
 		return nil
 	}

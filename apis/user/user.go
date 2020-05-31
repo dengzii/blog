@@ -8,9 +8,9 @@ import (
 )
 
 type loginJson struct {
-	Name    string `json:"name"`
-	Passwd  string `json:"passwd"`
-	Captcha string `json:"captcha"`
+	Name    string `json:"name"  validate:"required"`
+	Passwd  string `json:"passwd" validate:"required"`
+	Captcha string `json:"captcha" validate:"required"`
 }
 
 type registerJson struct {
@@ -59,7 +59,7 @@ func RegisterApi(ctx context.Context) (err error) {
 }
 
 func GetUserInfoApi(ctx context.Context) (err error) {
-	name := ctx.URLParam("user")
+	name := ctx.Params().GetString("username")
 	profile := user2.GetUserInfo(name)
 	_, err = ctx.JSON(common.SuccessResponse(profile))
 	return err

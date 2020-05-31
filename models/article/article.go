@@ -5,16 +5,16 @@ import (
 	"encoding/hex"
 	"errors"
 	"github.com/dengzii/blog/db"
+	"github.com/dengzii/blog/models/base"
 	"github.com/jinzhu/gorm"
+	"strings"
 	"time"
 )
 
-func AddArticle(newArticle *Article) (article *Article, err error) {
+func AddArticle(newArticle *Article) (err error) {
 
-	desc := newArticle.Content
-	if len(newArticle.Content) > 50 {
-		desc = newArticle.Content[:50]
-	}
+	index := strings.Index(newArticle.Content, "\n")
+	desc := newArticle.Content[0:index]
 	newArticle.Description = desc
 
 	h := md5.New()
@@ -26,12 +26,18 @@ func AddArticle(newArticle *Article) (article *Article, err error) {
 
 	if db.Insert(newArticle) {
 		db.Insert(&Archive{
-			CreatedAt: newArticle.CreatedAt,
-			ID:        newArticle.ID,
+			CommonModel: base.CommonModel{
+				CreatedAt: newArticle.CreatedAt,
+				UpdatedAt: newArticle.CreatedAt,
+			},
+			ArticleId: newArticle.ID,
 			Title:     newArticle.Title,
 		})
+		err = nil
+	} else {
+		err = errors.New("create article filed")
 	}
-	return newArticle, nil
+	return
 }
 
 func GetArticles(from int64, category string, count int) (articles []*ArticleBase) {

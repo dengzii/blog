@@ -54,15 +54,17 @@ func AddArticleApi(ctx context.Context) (err error) {
 
 	newArticle := &article.Article{}
 	err = ctx.ReadJSON(newArticle)
+
+	invalid := len(newArticle.Title) == 0 || len(newArticle.Content) == 0 || newArticle.AuthorId == 0
+	if err != nil || invalid {
+		return
+	}
+	err = article.AddArticle(newArticle)
 	if err != nil {
-		return err
+		return
 	}
-	art, _ := article.AddArticle(newArticle)
-	if art == nil {
-		return errors.New("create article failure")
-	}
-	_, err = ctx.JSON(common.SuccessResponse(art))
-	return err
+	_, err = ctx.JSON(common.SuccessResponse(""))
+	return
 }
 
 func ViewArticleApi(ctx context.Context) (err error) {

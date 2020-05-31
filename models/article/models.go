@@ -10,12 +10,12 @@ import (
 type ArticleBase struct {
 	base.CommonModel
 	CID          string `json:"-"`
-	Title        string `json:"title,omitempty"`
-	AuthorId     uint   `json:"-"`
+	Title        string `json:"title,omitempty" validate:"required"`
+	AuthorId     uint   `json:"author_id"  validate:"required"`
 	AuthorName   string `json:"author_name,omitempty default:dengzi"`
 	Description  string `json:"description,omitempty"`
-	TagName      string `json:"tag_name,omitempty"`
-	CategoryName string `json:"category_name,omitempty"`
+	TagName      string `json:"tag_name,omitempty" validate:"required"`
+	CategoryName string `json:"category_name,omitempty" validate:"required"`
 	Likes        uint   `json:"likes,omitempty default:0"`
 	Views        uint   `json:"views,omitempty default:0"`
 }
@@ -32,7 +32,6 @@ type Article struct {
 
 func (that *Article) BeforeCreate(scope *gorm.Scope) error {
 	tools.Log("Ready to create article,", that)
-	//scope.SetColumn("ID", time.Now())
 	that.CreatedAt = time.Now().Unix()
 	that.UpdatedAt = that.CreatedAt
 	return nil
@@ -54,8 +53,8 @@ func (that *Article) BeforeDelete(scope *gorm.Scope) error {
 }
 
 type Archive struct {
-	ID        uint   `json:"id" gorm:"primary_key"`
-	CreatedAt int64  `json:"created_at,omitempty"`
+	base.CommonModel
+	ArticleId uint   `json:"article_id"`
 	Title     string `json:"title"`
 }
 

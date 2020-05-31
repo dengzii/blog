@@ -56,5 +56,5 @@ func ReturnServerError(ctx context.Context) {
 
 func ReturnNotFound(ctx context.Context) {
 	ctx.StatusCode(iris.StatusNotFound)
-	_, _ = ctx.Writef("Path Not Found", ctx.Path())
+	_, _ = ctx.Writef("Path Not Found %s", ctx.Path())
 }
