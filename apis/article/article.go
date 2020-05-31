@@ -2,10 +2,10 @@ package article
 
 import (
 	"errors"
-	"github.com/dengzii/blog_server/apis/common"
-	"github.com/dengzii/blog_server/models/article"
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/context"
+	"github.com/dengzii/blog/apis/common"
+	"github.com/dengzii/blog/models/article"
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/context"
 	"time"
 )
 

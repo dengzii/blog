@@ -1,8 +1,8 @@
 package article
 
 import (
-	"github.com/dengzii/blog_server/models/base"
-	"github.com/dengzii/blog_server/tools"
+	"github.com/dengzii/blog/models/base"
+	"github.com/dengzii/blog/tools"
 	"github.com/jinzhu/gorm"
 	"time"
 )

@@ -1,10 +1,10 @@
 package models
 
 import (
-	"github.com/dengzii/blog_server/db"
-	"github.com/dengzii/blog_server/models/article"
-	"github.com/dengzii/blog_server/models/friend"
-	"github.com/dengzii/blog_server/models/user"
+	"github.com/dengzii/blog/db"
+	"github.com/dengzii/blog/models/article"
+	"github.com/dengzii/blog/models/friend"
+	"github.com/dengzii/blog/models/user"
 )
 
 func Init() {

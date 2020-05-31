@@ -1,10 +1,10 @@
 package user
 
 import (
-	"github.com/dengzii/blog_server/apis/common"
-	user2 "github.com/dengzii/blog_server/models/user"
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/context"
+	"github.com/dengzii/blog/apis/common"
+	user2 "github.com/dengzii/blog/models/user"
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/context"
 )
 
 type loginJson struct {

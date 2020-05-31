@@ -1,6 +1,6 @@
 package user
 
-import "github.com/dengzii/blog_server/db"
+import "github.com/dengzii/blog/db"
 
 type User struct {
 	Name      string `json:"name",gorm:"unique;not null VARCHAR(191)"`

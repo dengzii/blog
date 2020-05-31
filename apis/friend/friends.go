@@ -1,9 +1,9 @@
 package friend
 
 import (
-	"github.com/dengzii/blog_server/apis/common"
-	"github.com/dengzii/blog_server/models/friend"
-	"github.com/kataras/iris/context"
+	"github.com/dengzii/blog/apis/common"
+	"github.com/dengzii/blog/models/friend"
+	"github.com/kataras/iris/v12/context"
 )
 
 func AddFriendsApi(ctx context.Context) (err error) {

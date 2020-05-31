@@ -1,10 +1,9 @@
 package article
 
 import (
-	"github.com/dengzii/blog_server/apis"
-	"github.com/dengzii/blog_server/apis/common"
-	"github.com/dengzii/blog_server/models/article"
-	"github.com/kataras/iris/context"
+	"github.com/dengzii/blog/apis/common"
+	"github.com/dengzii/blog/models/article"
+	"github.com/kataras/iris/v12/context"
 )
 
 type categoryJson struct {
@@ -16,7 +15,7 @@ func AddCategoryApi(ctx context.Context) (err error) {
 	err = ctx.ReadJSON(categoryJson)
 	category := article.AddCategory(categoryJson.Name)
 	if category == nil {
-		err = apis.NewControllerError("add category failure.", 0)
+
 	} else {
 		_, err = ctx.JSON(common.SuccessResponse(category))
 	}

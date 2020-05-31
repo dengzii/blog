@@ -1,11 +1,11 @@
 package bootstrap
 
 import (
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/context"
-	"github.com/kataras/iris/middleware/logger"
-	recover2 "github.com/kataras/iris/middleware/recover"
-	"github.com/kataras/iris/sessions"
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/context"
+	"github.com/kataras/iris/v12/middleware/logger"
+	recover2 "github.com/kataras/iris/v12/middleware/recover"
+	"github.com/kataras/iris/v12/sessions"
 	"time"
 )
 

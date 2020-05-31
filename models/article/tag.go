@@ -1,7 +1,7 @@
 package article
 
 import (
-	"github.com/dengzii/blog_server/db"
+	"github.com/dengzii/blog/db"
 )
 
 func AddTag(name string, style int) *Tag {

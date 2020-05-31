@@ -2,14 +2,14 @@ package routers
 
 import (
 	"fmt"
-	"github.com/dengzii/blog_server/apis/article"
-	"github.com/dengzii/blog_server/apis/common"
-	"github.com/dengzii/blog_server/apis/friend"
-	"github.com/dengzii/blog_server/apis/user"
-	"github.com/dengzii/blog_server/bootstrap"
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/context"
-	"github.com/kataras/iris/core/router"
+	"github.com/dengzii/blog/apis/article"
+	"github.com/dengzii/blog/apis/common"
+	"github.com/dengzii/blog/apis/friend"
+	"github.com/dengzii/blog/apis/user"
+	"github.com/dengzii/blog/bootstrap"
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/context"
+	"github.com/kataras/iris/v12/core/router"
 )
 
 func Setup(app *bootstrap.Bootstrapper) {

@@ -1,8 +1,8 @@
 package user
 
 import (
-	"github.com/dengzii/blog_server/db"
-	"github.com/dengzii/blog_server/models/base"
+	"github.com/dengzii/blog/db"
+	"github.com/dengzii/blog/models/base"
 	"time"
 )
 

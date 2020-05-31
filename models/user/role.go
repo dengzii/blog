@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/dengzii/blog_server/models/base"
+	"github.com/dengzii/blog/models/base"
 )
 
 const (

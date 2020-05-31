@@ -1,7 +1,7 @@
 package common
 
 import (
-	context2 "github.com/kataras/iris/v12/context"
+	"github.com/kataras/iris/v12/context"
 )
 
 var authorityUrl map[string]string
@@ -10,10 +10,8 @@ func init() {
 
 }
 
-func AuthorityController(ctx context2.Context) {
+func AuthorityController(ctx context.Context) {
 
-	//path := ctx.Path()
-	//authorityUrl[path]
 	ctx.Header("Allow", "POST, GET, PUT, DELETE, OPTIONS")
 	ctx.Header("Vary", "Access-Control-Request-Method")
 	ctx.Header("Access-Control-Allow-Origin", "*")

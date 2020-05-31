@@ -4,7 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"errors"
-	"github.com/dengzii/blog_server/db"
+	"github.com/dengzii/blog/db"
 	"github.com/jinzhu/gorm"
 	"time"
 )

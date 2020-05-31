@@ -1,10 +1,9 @@
 package article
 
 import (
-	"github.com/dengzii/blog_server/apis"
-	"github.com/dengzii/blog_server/apis/common"
-	"github.com/dengzii/blog_server/models/article"
-	"github.com/kataras/iris/context"
+	"github.com/dengzii/blog/apis/common"
+	"github.com/dengzii/blog/models/article"
+	"github.com/kataras/iris/v12/context"
 )
 
 type tagJson struct {
@@ -17,7 +16,7 @@ func AddTagApi(ctx context.Context) (err error) {
 	err = ctx.ReadJSON(tagJson)
 	tag := article.AddTag(tagJson.Name, tagJson.Style)
 	if tag == nil {
-		err = apis.NewControllerError("add tag failure.", 0)
+
 	} else {
 		_, err = ctx.JSON(common.SuccessResponse(tag))
 	}

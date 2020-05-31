@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/dengzii/blog_server/bootstrap"
+	"github.com/dengzii/blog/bootstrap"
 	"github.com/dgrijalva/jwt-go"
 	jailer "github.com/iris-contrib/middleware/jwt"
 )

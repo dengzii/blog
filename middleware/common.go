@@ -1,6 +1,6 @@
 package middleware
 
-import "github.com/dengzii/blog_server/bootstrap"
+import "github.com/dengzii/blog/bootstrap"
 
 type Common struct {
 }
