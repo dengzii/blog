@@ -1,0 +1,14 @@
+[Iris]
+AppName = "dengzi's blog"
+Owner = "dengzi"
+Port    = 8000
+Charset = "UTF-8"
+
+[db]
+Host     = "localhost"
+Port     = 3306
+Database = "blog"
+Username = "root"
+Password = "root"
+Charset  = "utf8"
+LogEnable = true
