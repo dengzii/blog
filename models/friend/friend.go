@@ -1,6 +1,7 @@
 package friend
 
 import (
+	"errors"
 	"github.com/dengzii/blog/db"
 	"github.com/jinzhu/gorm"
 )
@@ -16,10 +17,12 @@ type Friend struct {
 	Display bool   `json:"-"`
 }
 
-func AddFriend(f *Friend) *Friend {
+func AddFriend(f *Friend) error {
 	f.Display = false
-	db.Insert(f)
-	return f
+	if db.Insert(f).RowsAffected == 0 {
+		return errors.New("add friend falied")
+	}
+	return nil
 }
 
 func GetFriend() (f []*Friend) {

@@ -6,12 +6,13 @@ import (
 	"errors"
 	"github.com/dengzii/blog/db"
 	"github.com/dengzii/blog/models/base"
+	user2 "github.com/dengzii/blog/models/user"
 	"github.com/jinzhu/gorm"
 	"strings"
 	"time"
 )
 
-func AddArticle(newArticle *Article) (err error) {
+func AddArticle(newArticle *Article) (err error, articleBase *ArticleBase) {
 
 	index := strings.Index(newArticle.Content, "\n")
 	desc := newArticle.Content[0:index]
@@ -24,7 +25,13 @@ func AddArticle(newArticle *Article) (err error) {
 	newArticle.CreatedAt = time.Now().Unix()
 	newArticle.UpdatedAt = newArticle.CreatedAt
 
-	if db.Insert(newArticle) {
+	var user user2.User
+	findUsr := db.Mysql.Where("id = ?", newArticle.AuthorId).First(&user).RowsAffected
+	if findUsr == 0 {
+		return errors.New("no such user"), nil
+	}
+	newArticle.AuthorName = user.Name
+	if db.Insert(newArticle).RowsAffected != 0 {
 		db.Insert(&Archive{
 			CommonModel: base.CommonModel{
 				CreatedAt: newArticle.CreatedAt,
@@ -37,6 +44,7 @@ func AddArticle(newArticle *Article) (err error) {
 	} else {
 		err = errors.New("create article filed")
 	}
+	articleBase = newArticle.toArticleBase()
 	return
 }
 
@@ -83,6 +91,18 @@ func ViewArticle(id int) (err error) {
 	return
 }
 
+func LikeArticle(id int) (err error) {
+	var article Article
+	db.Mysql.Where("id = ?", id).First(&article)
+	if len(article.Title) == 0 {
+		err = errors.New("article not found")
+		return
+	}
+	article.Likes += 1
+	db.Mysql.Model(&article).Update("likes", article.Likes)
+	return
+}
+
 func GetArchive() (archive []*Archive) {
 	db.Mysql.Order("created_at desc").Find(&archive)
 	return
@@ -93,10 +113,6 @@ func DelArticle(id int) {
 }
 
 func UpdateArticle() {
-
-}
-
-func LikeArticle() {
 
 }
 

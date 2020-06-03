@@ -38,14 +38,14 @@ func GetArticleApi(ctx context.Context) (err error) {
 		ctx.StatusCode(iris.StatusBadRequest)
 		return
 	}
-	articles := article.GetArticle(id)
-	if articles == nil {
+	article := article.GetArticle(id)
+	if article == nil {
 		err = errors.New("article not found")
 		ctx.StatusCode(iris.StatusNotFound)
 		return
 	}
 
-	responseJson := common.SuccessResponse(articles)
+	responseJson := common.SuccessResponse(article)
 	_, err = ctx.JSON(responseJson)
 	return
 }
@@ -59,7 +59,23 @@ func AddArticleApi(ctx context.Context) (err error) {
 	if err != nil || invalid {
 		return
 	}
-	err = article.AddArticle(newArticle)
+	err, result := article.AddArticle(newArticle)
+	if err != nil {
+		return
+	}
+	_, err = ctx.JSON(common.SuccessResponse(result))
+	return
+}
+
+func ViewArticleApi(ctx context.Context) (err error) {
+
+	articleId, err := ctx.Params().GetInt("id")
+	if err != nil || articleId <= 0 {
+		err = errors.New("bad request")
+		ctx.StatusCode(iris.StatusBadRequest)
+		return
+	}
+	err = article.ViewArticle(articleId)
 	if err != nil {
 		return
 	}
@@ -67,20 +83,18 @@ func AddArticleApi(ctx context.Context) (err error) {
 	return
 }
 
-func ViewArticleApi(ctx context.Context) (err error) {
-
-	articleId, err := ctx.URLParamInt("id")
+func LikeArticleApi(ctx context.Context) (err error) {
+	articleId, err := ctx.Params().GetInt("id")
 	if err != nil || articleId <= 0 {
 		err = errors.New("bad request")
 		ctx.StatusCode(iris.StatusBadRequest)
 		return
 	}
-	err = article.ViewArticle(articleId)
-	return err
-}
-
-func LikeArticleApi(ctx context.Context) (err error) {
-
+	err = article.LikeArticle(articleId)
+	if err != nil {
+		return
+	}
+	_, err = ctx.JSON(common.SuccessResponse("thank you."))
 	return err
 }
 

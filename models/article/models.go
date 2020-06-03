@@ -76,6 +76,7 @@ type Tag struct {
 
 func (that *Article) toArticleBase() (articleBase *ArticleBase) {
 	articleBase = &ArticleBase{
+		AuthorId:     that.AuthorId,
 		Title:        that.Title,
 		AuthorName:   that.AuthorName,
 		Description:  that.Description,
@@ -84,6 +85,7 @@ func (that *Article) toArticleBase() (articleBase *ArticleBase) {
 		Likes:        that.Likes,
 		Views:        that.Views,
 	}
+	articleBase.ID = that.ID
 	articleBase.CreatedAt = that.CreatedAt
 	articleBase.UpdatedAt = that.UpdatedAt
 	return

@@ -24,11 +24,10 @@ func Init() {
 	Mysql.LogMode(dbConf.LogEnable)
 }
 
-func Insert(value interface{}) (success bool) {
+func Insert(value interface{}) *gorm.DB {
 
-	success = Mysql.NewRecord(value)
-	Mysql.Create(value)
-	return
+	Mysql.NewRecord(value)
+	return Mysql.Create(value)
 }
 
 func CreateTable(tables []interface{}) {

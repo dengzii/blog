@@ -49,18 +49,27 @@ func RegisterApi(ctx context.Context) (err error) {
 	if err != nil {
 		return err
 	}
-	success := user2.AddUser(user.Name, user.Passwd, user.Email)
-	if success {
-		_, err = ctx.JSON(common.SuccessResponse(nil))
-	} else {
-		_, err = ctx.JSON(common.ErrorEmptyResponse("register failed."))
+	err = user2.AddUser(user.Name, user.Passwd, user.Email)
+	if err != nil {
+		_, err = ctx.JSON(common.SuccessResponse(`welcome ` + user.Name))
 	}
-	return err
+	return
 }
 
 func GetUserInfoApi(ctx context.Context) (err error) {
 	name := ctx.Params().GetString("username")
 	profile := user2.GetUserInfo(name)
 	_, err = ctx.JSON(common.SuccessResponse(profile))
+	return err
+}
+
+func ViewSiteApi(ctx context.Context) (err error) {
+	name := ctx.Params().GetString("username")
+	success := user2.View(name)
+	if success {
+		_, err = ctx.JSON(common.SuccessResponse(nil))
+	} else {
+		_, err = ctx.JSON(common.ErrorEmptyResponse("failed."))
+	}
 	return err
 }

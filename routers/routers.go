@@ -40,6 +40,7 @@ func userRouterFunc(p router.Party) {
 
 	p.Put("/", catchErrorRouter(user.RegisterApi))
 	p.Post("/", catchErrorRouter(user.LoginApi))
+	p.Patch("/views", catchErrorRouter(user.ViewSiteApi))
 	//p.Patch("/", catchErrorRouter(user.UpdateController))
 }
 
@@ -58,7 +59,8 @@ func articleRouterFunc(p router.Party) {
 	p.Get("/{id:uint}", catchErrorRouter(article.GetArticleApi))
 	p.Put("/", catchErrorRouter(article.AddArticleApi))
 	p.Get("/", catchErrorRouter(article.GetArticlesApi))
-	p.Post("/", catchErrorRouter(article.ViewArticleApi))
+	p.Patch("/{id:uint}/view", catchErrorRouter(article.ViewArticleApi))
+	p.Patch("/{id:uint}/like", catchErrorRouter(article.LikeArticleApi))
 }
 
 func tagRouterFunc(p router.Party) {
