@@ -70,11 +70,15 @@ func GetArticles(from int64, category string, count int) (articles []*ArticleBas
 	return articles
 }
 
-func GetArticle(id int) *Article {
+func GetArticle(id int, view bool) *Article {
 	var article Article
 	db.Mysql.Where("id = ?", id).Attrs(nil).FirstOrInit(&article)
 	if len(article.Title) == 0 {
 		return nil
+	}
+	if view {
+		article.Views += 1
+		db.Mysql.Model(&article).Update("views", article.Views)
 	}
 	return &article
 }

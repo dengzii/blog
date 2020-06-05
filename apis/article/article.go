@@ -33,19 +33,20 @@ func GetArchiveApi(ctx context.Context) (err error) {
 func GetArticleApi(ctx context.Context) (err error) {
 
 	id, err := ctx.Params().GetInt("id")
+	isView, _ := ctx.URLParamBool("view")
 	if err != nil || id <= 0 {
 		err = errors.New("bad request")
 		ctx.StatusCode(iris.StatusBadRequest)
 		return
 	}
-	article := article.GetArticle(id)
-	if article == nil {
+	result := article.GetArticle(id, isView)
+	if result == nil {
 		err = errors.New("article not found")
 		ctx.StatusCode(iris.StatusNotFound)
 		return
 	}
 
-	responseJson := common.SuccessResponse(article)
+	responseJson := common.SuccessResponse(result)
 	_, err = ctx.JSON(responseJson)
 	return
 }

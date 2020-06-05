@@ -30,7 +30,7 @@ func Insert(value interface{}) *gorm.DB {
 	return Mysql.Create(value)
 }
 
-func CreateTable(tables []interface{}) {
+func CreateTables(tables []interface{}) {
 
 	for _, table := range tables {
 		if Mysql.HasTable(table) {

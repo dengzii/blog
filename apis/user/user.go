@@ -3,8 +3,9 @@ package user
 import (
 	"github.com/dengzii/blog/apis/common"
 	user2 "github.com/dengzii/blog/models/user"
-	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/context"
+	"net/http"
+	"time"
 )
 
 type loginJson struct {
@@ -29,16 +30,19 @@ func LoginApi(ctx context.Context) (err error) {
 	var requestUser loginJson
 
 	err = ctx.ReadJSON(&requestUser)
-	var user = user2.GetUser(requestUser.Name, requestUser.Passwd)
+	user, token := user2.GetUser(requestUser.Name, requestUser.Passwd)
 
-	response := common.ErrorResponse(400, "wrong password or username", nil)
-	if user.Name != "" {
-		response.Status = 200
-		response.Msg = "success"
-		response.Data = user
+	if len(token) == 0 {
+		_, err = ctx.JSON(common.ErrorEmptyResponse("login failed"))
+		return
 	}
-	ctx.StatusCode(iris.StatusOK)
-	_, err = ctx.JSON(response)
+	ctx.SetCookie(&http.Cookie{
+		Name:    "token",
+		Value:   token,
+		Path:    "/",
+		Expires: time.Now().AddDate(0, 0, 1),
+	})
+	_, err = ctx.JSON(common.SuccessResponse(user))
 	return err
 }
 

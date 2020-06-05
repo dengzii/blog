@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/dengzii/blog/db"
 	"github.com/dengzii/blog/models/base"
+	"math/rand"
 	"time"
 )
 
@@ -12,6 +13,7 @@ type User struct {
 	Name      string `json:"name",gorm:"unique;not null VARCHAR(191)"`
 	Avatar    string `json:"avatar"`
 	Email     string `json:"email"`
+	SiteName  string `json:"site_name"`
 	Bio       string `json:"bio"`
 	Links     string `json:"links"`
 	Likes     int32  `json:"likes"`
@@ -22,12 +24,25 @@ type User struct {
 	PassWd    string `json:"-",gorm:"not null"`
 }
 
-func GetUser(name string, passwd string) *User {
-	var user User
-	tab := []interface{}{&User{}}
-	db.CreateTable(tab)
-	db.Mysql.Where("name = ? AND pass_wd = ?", name, passwd).Find(&user)
-	return &user
+type Log struct {
+	base.CommonModel
+	UserId uint
+	Token  string
+}
+
+func GetUser(name string, passwd string) (user User, token string) {
+	var result = db.Mysql.Where("name = ? AND pass_wd = ?", name, passwd).Find(&user).RowsAffected
+	if result > 0 {
+		token = getRandomString(32)
+		db.Insert(&Log{
+			CommonModel: base.CommonModel{
+				CreatedAt: time.Now().Unix(),
+			},
+			UserId: user.ID,
+			Token:  token,
+		})
+	}
+	return
 }
 
 func AddUser(name string, passwd string, email string) (err error) {
@@ -75,4 +90,15 @@ func View(name string) bool {
 
 func init() {
 
+}
+
+func getRandomString(l int) string {
+	str := "0123456789abcdefghijklmnopqrstuvwxyz"
+	bytes := []byte(str)
+	var result []byte
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i := 0; i < l; i++ {
+		result = append(result, bytes[r.Intn(len(bytes))])
+	}
+	return string(result)
 }

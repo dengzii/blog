@@ -17,8 +17,8 @@ func Init() {
 
 	tab := []interface{}{
 		tableUser, tableTag, tableClass, tableFriend, tableArticle, tableArchive,
-		&Comment{}, &user.About{},
+		&Comment{}, &user.About{}, &user.Log{},
 	}
 
-	db.CreateTable(tab)
+	db.CreateTables(tab)
 }
