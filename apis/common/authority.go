@@ -26,20 +26,9 @@ func AuthorityController(ctx context.Context) {
 	}
 
 	if needAuthor && ctx.Method() == iris.MethodPut {
-		token := ctx.URLParam("token")
-		if token != "dengjianhua520" {
-			ctx.StatusCode(iris.StatusForbidden)
-			_, _ = ctx.WriteString("403 Forbidden")
-			return
-		}
+		//token := ctx.URLParam("token")
+		_, _ = ctx.WriteString("403")
+		return
 	}
-	ctx.Header("Allow", "POST, GET, PUT, PATCH, DELETE, OPTIONS")
-	ctx.Header("Vary", "Access-Control-Request-Method")
-	ctx.Header("Access-Control-Allow-Origin", "*")
-	ctx.Header("Access-Control-Allow-Credentials", "true")
-	ctx.Header("Access-Control-Allow-Methods", "POST, GET, PATCH, PUT, DELETE, OPTIONS")
-	ctx.Header("Access-Control-Request-Headers", "Accept,X-Requested-With,Content-Length, Accept-Encoding,X-CSRF-Token,Authorization,token, Content-Type")
-	ctx.Header("Access-Control-Allow-Headers", "Accept, Content-Type")
-	ctx.Header("Access-Control-Request-Method", "*")
 	ctx.Next()
 }

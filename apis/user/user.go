@@ -9,8 +9,8 @@ import (
 )
 
 type loginJson struct {
-	Name    string `json:"name"  validate:"required"`
-	Passwd  string `json:"passwd" validate:"required"`
+	Name    string `json:"username"  validate:"required"`
+	Passwd  string `json:"password" validate:"required"`
 	Captcha string `json:"captcha" validate:"required"`
 }
 
