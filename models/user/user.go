@@ -26,8 +26,9 @@ type User struct {
 
 type Log struct {
 	base.CommonModel
-	UserId uint
-	Token  string
+	UserId   uint
+	UserName string
+	Token    string
 }
 
 func GetUser(name string, passwd string) (user User, token string) {
@@ -38,8 +39,9 @@ func GetUser(name string, passwd string) (user User, token string) {
 			CommonModel: base.CommonModel{
 				CreatedAt: time.Now().Unix(),
 			},
-			UserId: user.ID,
-			Token:  token,
+			UserName: user.Name,
+			UserId:   user.ID,
+			Token:    token,
 		})
 	}
 	return

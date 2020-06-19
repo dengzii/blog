@@ -52,7 +52,7 @@ func aboutRouterFunc(p router.Party) {
 func friendRouterFunc(p router.Party) {
 	p.Get("/", catchErrorRouter(friend.GetFriendsApi))
 	p.Put("/", catchErrorRouter(friend.AddFriendsApi))
-	p.Patch("/", catchErrorRouter(friend.AddFriendsApi))
+	//p.Patch("/", catchErrorRouter(friend.AddFriendsApi))
 }
 
 func articleRouterFunc(p router.Party) {

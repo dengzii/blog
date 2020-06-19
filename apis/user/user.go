@@ -30,6 +30,10 @@ func LoginApi(ctx context.Context) (err error) {
 	var requestUser loginJson
 
 	err = ctx.ReadJSON(&requestUser)
+	if len(requestUser.Name) == 0 || len(requestUser.Passwd) == 0 {
+		_, err = ctx.JSON(common.ErrorEmptyResponse("username and password is required."))
+		return
+	}
 	user, token := user2.GetUser(requestUser.Name, requestUser.Passwd)
 
 	if len(token) == 0 {

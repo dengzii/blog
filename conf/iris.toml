@@ -5,10 +5,10 @@ Port    = 8000
 Charset = "UTF-8"
 
 [db]
-Host     = "dengzii.com"
+Host     = ""
 Port     = 3306
 Database = "blog_dev"
-Username = "dengzi"
-Password = "djh1713."
+Username = ""
+Password = ""
 Charset  = "utf8"
 LogEnable = true
