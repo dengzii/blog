@@ -15,7 +15,12 @@ import (
 func AddArticle(newArticle *Article) (err error, articleBase *ArticleBase) {
 
 	index := strings.Index(newArticle.Content, "\n")
-	desc := newArticle.Content[0:index]
+	var desc string
+	if index != -1 {
+		desc = newArticle.Content[0:index]
+	} else {
+		desc = newArticle.Content
+	}
 	newArticle.Description = desc
 
 	h := md5.New()

@@ -25,6 +25,7 @@ func init() {
 		//"/category",
 		"/friend",
 		"/user/views",
+		"/user",
 	}
 }
 
